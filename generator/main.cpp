@@ -1,6 +1,9 @@
 #include <cstring>
 #include <iostream>
-#include <string.h>
+#include <random>
+#include <climits>
+#include <ctime>
+
 
 
 int main(int argc, char* argv[])
@@ -38,12 +41,48 @@ int main(int argc, char* argv[])
     {
         totalInt = 512000000;
     }
+    else if (strcmp(size, "TEST") == 0)
+    {
+        totalInt = 100;
+    }
     else
     {
         std::cout << "Error";
         return 1;
     }
 
+    int block[4096];
+
+    std::mt19937 rng(time(NULL));
+    std::uniform_int_distribution<int> dist(INT_MIN, INT_MAX);
+
+    FILE *archivo = fopen(output, "wb");
+
+    if (archivo == NULL) {
+        std::cout << "Error al abrir el archivo\n";
+        return 1;
+    }
+    for (int j = 0; j < totalInt / 4096; j++)
+    {
+        for (int i = 0; i < 4096; i++)
+        {
+            block[i] = dist(rng);
+        }
+
+        fwrite(block, sizeof(int), 4096, archivo);
+    }
+
+
+    if (totalInt % 4096 != 0)
+    {
+        for (int i = 0; i < totalInt % 4096; i++)
+        {
+            block[i] = dist(rng);
+        }
+        fwrite(block, sizeof(int), totalInt % 4096, archivo);
+    }
+
+    fclose(archivo);
 
     return 0;
 
