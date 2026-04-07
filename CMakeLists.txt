@@ -5,4 +5,6 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_executable(generator generator/main.cpp)
 
-add_executable(sorter sorter/main.cpp)
+add_executable(sorter sorter/main.cpp
+        sorter/BubbleSort.h
+)

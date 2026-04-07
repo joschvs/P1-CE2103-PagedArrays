@@ -83,6 +83,6 @@ int main(int argc, char* argv[])
     }
 
     fclose(inputFile);
-    
+
     return 0;
 }
