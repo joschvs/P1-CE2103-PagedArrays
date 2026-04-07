@@ -3,3 +3,8 @@
 //
 
 #include "PagedArray.h"
+
+int main()
+{
+    PagedArray
+}

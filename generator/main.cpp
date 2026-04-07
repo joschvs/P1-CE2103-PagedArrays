@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
         {
             size = argv[i + 1];
         }
-        
+
         if (strcmp(argv[i], "-output") == 0 && i + 1 < argc)
         {
             output = argv[i + 1];
