@@ -5,6 +5,7 @@
 #ifndef P1_CE2103_PAGEDARRAYS_MAIN_H
 #define P1_CE2103_PAGEDARRAYS_MAIN_H
 #include <cstdio>
+#include <iostream>
 #include <wchar.h>
 
 
@@ -21,6 +22,7 @@ private:
     int pageHits;
     int* lastUsed;
     int slot;
+    int useCounter;
 
     void writePage(int slot)
     {
@@ -28,6 +30,87 @@ private:
 
         fseek(file, pos, SEEK_SET);
         fwrite(pages[slot], sizeof(int), pageSize, file);
+    }
+
+    int findLRUslot()
+    {
+        int LRU = 0;
+        for (int i = 0; i < pageCount - 1; i++)
+        {
+            if (pageIDs[i] == -1)
+            {
+                return i;
+            }
+            else
+            {
+                if (lastUsed[i] < lastUsed[LRU])
+                {
+                    LRU = i;
+                }
+            }
+
+        }
+        return LRU;
+    }
+
+    void loadPage(int LRUslot, int pageID)
+    {
+        if (modified[LRUslot])
+        {
+            writePage(LRUslot);
+        }
+
+        long pos = pageID * pageSize * sizeof(int);
+
+        fseek(file, pos, SEEK_SET);
+        fread(pages[LRUslot], sizeof(int), pageSize, file);
+
+        modified[LRUslot] = false;
+        pageIDs[LRUslot] = pageID;
+
+    }
+
+    int& operator[](int index)
+    {
+        int page = index / pageSize;
+        int pageSlot = index % pageSize;
+        bool pageFault = false;
+        int ramSlot = -1;
+
+        for (int i = 0; i < pageCount; i++)
+        {
+            if (pageIDs[i] == page)
+            {
+                pageHits += 1;
+                pageFault = false;
+                ramSlot = i;
+                break;
+
+            }
+            else
+            {
+                pageFault = true;
+            }
+        }
+
+        if (pageFault)
+        {
+            pageFaults += 1;
+            int LRUslot = findLRUslot();
+            loadPage(LRUslot, page);
+            ramSlot = LRUslot;
+        }
+
+        lastUsed[ramSlot] = ++useCounter;
+        modified[ramSlot] = true;
+
+        return pages[ramSlot][pageSlot];
+    }
+
+    void stats()
+    {
+        std::cout << "Page faults:" << pageFaults << "\n";
+        std::cout << "Page hits:" << pageHits << "\n";
     }
 
 public:
@@ -45,6 +128,7 @@ public:
         lastUsed = new int[pageCount];
         pages = new int*[pageCount];
         pageIDs = new int[pageCount];
+        useCounter = 0;
 
         for (int i = 0; i < pageCount; i++)
         {
