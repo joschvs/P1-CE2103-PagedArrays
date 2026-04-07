@@ -39,27 +39,50 @@ int main(int argc, char* argv[])
 
     if (input == NULL)
     {
-        std::cout <<"input requerido";
+        std::cout << "input requerido";
         return 1;
     }
     else if (output == NULL)
     {
-        std::cout <<"output requerido";
+        std::cout << "output requerido";
         return 1;
     }
     else if (alg == NULL)
     {
-        std::cout <<"algoritmo requerido";
+        std::cout << "algoritmo requerido";
         return 1;
     }
     else if (pageSize == 0)
     {
-        std::cout <<"tamaño de page requerido";
+        std::cout << "tamaño de page requerido";
         return 1;
     }
     else if (pageCount == 0)
     {
-        std::cout <<"cantidad máxima de páginas requerida";
+        std::cout << "cantidad máxima de páginas requerida";
         return 1;
     }
+
+    FILE *inputFile = fopen(input, "rb");
+
+    if (inputFile == NULL)
+    {
+        std::cout << "Error al abrir el archivo\n";
+        return 1;
+    }
+
+    int block[4096];
+    int read = fread(block, sizeof(int), 4096, inputFile);
+
+    FILE *outputFile = fopen(output, "wb");
+
+    while (read != 0)
+    {
+        fwrite(block, sizeof(int), read, outputFile);
+        read = fread(block, sizeof(int), 4096, inputFile);
+    }
+
+    fclose(inputFile);
+    
+    return 0;
 }
