@@ -20,6 +20,15 @@ private:
     int pageFaults;
     int pageHits;
     int* lastUsed;
+    int slot;
+
+    void writePage(int slot)
+    {
+        long pos = pageIDs[slot] * pageSize * sizeof(int);
+
+        fseek(file, pos, SEEK_SET);
+        fwrite(pages[slot], sizeof(int), pageSize, file);
+    }
 
 public:
     PagedArray(char* filePath, int pageSize, int pageCount)
@@ -46,6 +55,29 @@ public:
         }
 
     };
+    ~PagedArray()
+    {
+        for (int i = 0; i < pageCount; i++)
+        {
+            if (modified[i])
+            {
+                writePage(i);
+            }
+        }
+
+        delete[] modified;
+        delete[] pageIDs;
+        delete[] lastUsed;
+
+        for (int i = 0; i < pageCount; i++)
+        {
+            delete[] pages[i];
+        }
+
+        delete[] pages;
+
+        fclose(file);
+    }
 };
 
 
