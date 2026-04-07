@@ -7,4 +7,5 @@ add_executable(generator generator/main.cpp)
 
 add_executable(sorter sorter/main.cpp
         sorter/BubbleSort.h
+        sorter/SelectionSort.h
 )
