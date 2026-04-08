@@ -9,4 +9,5 @@ add_executable(sorter sorter/main.cpp
         sorter/BubbleSort.h
         sorter/SelectionSort.h
         sorter/InsertionSort.h
+        sorter/HeapSort.h
 )
