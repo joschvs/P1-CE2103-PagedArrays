@@ -1,5 +1,5 @@
 #include "PagedArray.h"
-#include "BubbleSort.h"
+#include "QuickSort.h"
 #include "HeapSort.h"
 #include "InsertionSort.h"
 #include "MergeSort.h"
@@ -103,9 +103,9 @@ int main(int argc, char* argv[])
 
     auto start = std::chrono::high_resolution_clock::now();
 
-    if (strcmp(alg, "BUBBLE") == 0)
+    if (strcmp(alg, "QUICK") == 0)
     {
-        bubbleSort(arr, totalInt);
+        quickSort(arr, totalInt);
     }
 
     else if (strcmp(alg, "HEAP") == 0)
@@ -133,6 +133,8 @@ int main(int argc, char* argv[])
         std::cout << "Digite un algoritmo válido";
         return 1;
     }
+
+    std::cout << "Algoritmo: " << alg << " SORT" << " \n";
 
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> duration = end - start;

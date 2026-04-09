@@ -11,4 +11,5 @@ add_executable(sorter sorter/main.cpp
         sorter/InsertionSort.h
         sorter/HeapSort.h
         sorter/MergeSort.h
+        sorter/QuickSort.h
 )

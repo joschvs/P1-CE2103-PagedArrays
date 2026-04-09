@@ -47,7 +47,7 @@ int main(int argc, char* argv[])
 
     else if (strcmp(size, "TEST") == 0)
     {
-        totalInt = 32000000;
+        totalInt = 16000000;
     }
 
     else
