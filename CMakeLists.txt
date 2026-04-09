@@ -14,3 +14,12 @@ add_executable(sorter sorter/main.cpp
         sorter/MergeSort.h
         sorter/QuickSort.h
 )
+
+add_executable(baseline baseline/main.cpp
+        baseline/BubbleSort.h
+        baseline/SelectionSort.h
+        baseline/InsertionSort.h
+        baseline/HeapSort.h
+        baseline/MergeSort.h
+        baseline/QuickSort.h
+)
