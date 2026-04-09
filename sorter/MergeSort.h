@@ -1,7 +1,7 @@
 #ifndef P1_CE2103_PAGEDARRAYS_MERGESORT_H
 #define P1_CE2103_PAGEDARRAYS_MERGESORT_H
 
-void merge(PagedArray& arr, long left, long mid, long right) {
+inline void merge(PagedArray& arr, long left, long mid, long right) {
     long n1 = mid - left + 1;
     long n2 = right - mid;
 
@@ -44,7 +44,7 @@ void merge(PagedArray& arr, long left, long mid, long right) {
     delete[] R;
 }
 
-void mergeSortRecursive(PagedArray& arr, long left, long right) {
+inline void mergeSortRecursive(PagedArray& arr, long left, long right) {
     if (left < right) {
         long mid = left + (right - left) / 2;
 
@@ -55,7 +55,7 @@ void mergeSortRecursive(PagedArray& arr, long left, long right) {
     }
 }
 
-void mergeSort(PagedArray& arr, long n) {
+inline void mergeSort(PagedArray& arr, long n) {
     if (n > 1) {
         mergeSortRecursive(arr, 0, n - 1);
     }

@@ -1,7 +1,7 @@
 #ifndef P1_CE2103_PAGEDARRAYS_SELECTIONSORT_H
 #define P1_CE2103_PAGEDARRAYS_SELECTIONSORT_H
 
-void selectionSort(PagedArray& arr, long n)
+inline void selectionSort(PagedArray& arr, long n)
 {
     for (int i = 0; i < n - 1; i++)
     {

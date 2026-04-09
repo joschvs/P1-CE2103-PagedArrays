@@ -1,7 +1,7 @@
 #ifndef P1_CE2103_PAGEDARRAYS_INSERTIONSORT_H
 #define P1_CE2103_PAGEDARRAYS_INSERTIONSORT_H
 
-void insertionSort(PagedArray& arr, long n)
+inline void insertionSort(PagedArray& arr, long n)
 {
     for (int i = 1; i < n; i++)
     {

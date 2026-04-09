@@ -7,8 +7,8 @@
 
 int main(int argc, char* argv[])
 {
-    char *size = NULL;
-    char *output = NULL;
+    char *size = nullptr;
+    char *output = nullptr;
     long totalInt;
 
     for (int i = 1; i < argc; i++)
@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
         }
     }
 
-    if (size == NULL || output == NULL)
+    if (size == nullptr || output == nullptr)
     {
         std::cout <<"size o output requerido";
         return 1;
@@ -45,6 +45,11 @@ int main(int argc, char* argv[])
         totalInt = 512000000;
     }
 
+    else if (strcmp(size, "TEST") == 0)
+    {
+        totalInt = 32000000;
+    }
+
     else
     {
         std::cout << "Error";
@@ -53,12 +58,12 @@ int main(int argc, char* argv[])
 
     int block[4096];
 
-    std::mt19937 rng(time(NULL));
+    std::mt19937 rng(time(nullptr));
     std::uniform_int_distribution<int> dist(INT_MIN, INT_MAX);
 
     FILE *archivo = fopen(output, "wb");
 
-    if (archivo == NULL)
+    if (archivo == nullptr)
     {
         std::cout << "Error al abrir el archivo\n";
         return 1;

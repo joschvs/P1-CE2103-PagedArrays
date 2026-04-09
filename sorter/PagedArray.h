@@ -31,7 +31,7 @@ private:
     int findLRUslot()
     {
         int LRU = 0;
-        for (int i = 0; i < pageCount - 1; i++)
+        for (int i = 0; i < pageCount; i++)
         {
             if (pageIDs[i] == -1)
             {
@@ -66,7 +66,58 @@ private:
 
     }
 
-    int& operator[](int index)
+
+public:
+    PagedArray(char* filePath, int pageSize, int pageCount)
+    {
+        pageFaults = 0;
+        pageHits = 0;
+
+        file = fopen(filePath, "rb+");
+
+        this->pageSize = pageSize;
+        this->pageCount = pageCount;
+
+        modified = new bool[pageCount];
+        lastUsed = new int[pageCount];
+        pages = new int*[pageCount];
+        pageIDs = new int[pageCount];
+        useCounter = 0;
+
+        for (int i = 0; i < pageCount; i++)
+        {
+            modified[i] = false;
+            lastUsed[i] = 0;
+            pages[i] = new int[pageSize];
+            pageIDs[i] = -1;
+        }
+
+    };
+    ~PagedArray()
+    {
+        for (int i = 0; i < pageCount; i++)
+        {
+            if (modified[i])
+            {
+                writePage(i);
+            }
+        }
+
+        delete[] modified;
+        delete[] pageIDs;
+        delete[] lastUsed;
+
+        for (int i = 0; i < pageCount; i++)
+        {
+            delete[] pages[i];
+        }
+
+        delete[] pages;
+
+        fclose(file);
+    }
+
+    int& operator[](long index)
     {
         int page = index / pageSize;
         int pageSlot = index % pageSize;
@@ -107,56 +158,6 @@ private:
     {
         std::cout << "Page faults:" << pageFaults << "\n";
         std::cout << "Page hits:" << pageHits << "\n";
-    }
-
-public:
-    PagedArray(char* filePath, int pageSize, int pageCount)
-    {
-        pageFaults = 0;
-        pageHits = 0;
-
-        file = fopen(filePath, "rb+");
-
-        this->pageSize = pageSize;
-        this->pageCount = pageCount;
-
-        modified = new bool[pageCount];
-        lastUsed = new int[pageCount];
-        pages = new int*[pageCount];
-        pageIDs = new int[pageCount];
-        useCounter = 0;
-
-        for (int i = 0; i < pageCount; i++)
-        {
-            modified[i] = false;
-            lastUsed[i] = -1;
-            pages[i] = new int[pageSize];
-            pageIDs[i] = -1;
-        }
-
-    };
-    ~PagedArray()
-    {
-        for (int i = 0; i < pageCount; i++)
-        {
-            if (modified[i])
-            {
-                writePage(i);
-            }
-        }
-
-        delete[] modified;
-        delete[] pageIDs;
-        delete[] lastUsed;
-
-        for (int i = 0; i < pageCount; i++)
-        {
-            delete[] pages[i];
-        }
-
-        delete[] pages;
-
-        fclose(file);
     }
 };
 
