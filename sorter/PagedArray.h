@@ -269,8 +269,8 @@ public:
 
     void stats()
     {
-        std::cout << "Page faults:" << pageFaults << "\n";
-        std::cout << "Page hits:" << pageHits << "\n";
+        std::cout << "Page faults: " << pageFaults << "\n";
+        std::cout << "Page hits: " << pageHits << "\n";
     }
 };
 

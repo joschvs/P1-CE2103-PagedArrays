@@ -94,6 +94,7 @@ int main(int argc, char* argv[])
 
     long totalInt = -1;
     long size = ftell(outputFile);
+    long sizeInput = ftell(inputFile);
 
     totalInt = size / sizeof(int);
 
@@ -116,6 +117,10 @@ int main(int argc, char* argv[])
     else if (strcmp(alg, "INSERTION") == 0)
     {
         insertionSort(arr, totalInt);
+        if (sizeInput > 254000)
+        {
+            std::cout << "El tamaño de su archivo puede ser muy grande para Insertion Sort, el resultado puede tardar horas\n";
+        }
     }
 
     else if (strcmp(alg, "MERGE") == 0)
@@ -126,6 +131,10 @@ int main(int argc, char* argv[])
     else if (strcmp(alg, "SELECTION") == 0)
     {
         selectionSort(arr, totalInt);
+        if (sizeInput > 254000)
+        {
+            std::cout << "El tamaño de su archivo puede ser muy grande para Selection Sort, el resultado puede tardar horas\n";
+        }
     }
 
     else
@@ -145,7 +154,7 @@ int main(int argc, char* argv[])
 
     for (int i = 0; i < totalInt; i++)
     {
-        fprintf(txtFile, "%d,", arr[i]);
+        fprintf(txtFile, "%d,", (int)arr[i]);
     }
 
     fclose(txtFile);

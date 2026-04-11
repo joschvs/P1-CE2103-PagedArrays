@@ -32,22 +32,22 @@ int main(int argc, char* argv[])
 
     if (strcmp(size, "SMALL") == 0)
     {
-        totalInt = 128000000;
+        totalInt = 8388608;
     }
 
     else if (strcmp(size, "MEDIUM") == 0)
     {
-        totalInt = 256000000;
+        totalInt = 16777216;
     }
 
     else if (strcmp(size, "LARGE") == 0)
     {
-        totalInt = 512000000;
+        totalInt = 33554432;
     }
 
     else if (strcmp(size, "TEST") == 0)
     {
-        totalInt = 16000000;
+        totalInt = 16384;
     }
 
     else
